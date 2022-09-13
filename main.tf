@@ -1,10 +1,6 @@
-#module "global-vars" {
-#  source = "../../../../tf-global-vars"
-#}
-
-#module "env-vars" {
-#  source = "../../tf-env-vars"
-#}
+module "env-vars" {
+  source = "../tf-env-vars"
+}
 
 locals {
   imagepullsecrets_patcher_name = "imagepullsecrets-patcher"
@@ -28,11 +24,11 @@ provider "kubernetes" {
 
 terraform {
   backend "s3" {
-    bucket = "TO_BE_CHANGED_UNIQUE_BUCKET_NAME_GLOBAL"
-    # this key must be unique to the module
-    key = "TO_BE_CHANGED_TFSTATE_KEY"
-    region = "TO_BE_CHANGED_REGION_AWS"
-    dynamodb_table = "TO_BE_CHANGE_DYNAMODB_TABLE_NAME_AWS"
+    # USER-SPECIFIC CONFIGURATIONS
+    bucket = "a205817-shared-infras-terraform-state-us-east-1-ppe"
+    key = "ppe/k8s/imagepullsecrets-patcher/terraform.tfstate"
+    region = "us-east-1"
+    dynamodb_table = "a205817-shared-infras-terraform-state-lock"
     encrypt = true
   }
 }
